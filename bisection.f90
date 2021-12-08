@@ -33,5 +33,5 @@ end program bisection
 function f(x)
     implicit none
     real :: x, f
-    f = x**2 + 3*x
+    f = 3*x**3 + 2*x**2 + 12
 end function f
