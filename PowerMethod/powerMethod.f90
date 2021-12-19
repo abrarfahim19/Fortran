@@ -1,10 +1,11 @@
 program powerMethod
     implicit none
-    real:: tol
+    real:: tol, er, maxx, maxy
     real,allocatable :: A(:,:), x(:,:), y(:,:), eig(:,:)
     integer:: i, j, k, n, it
 
-    tol = 0.001
+    tol = 0.1
+    er = 1000
 
     print*, 'Enter The Matrix Dimension : '
     read*, n
@@ -41,8 +42,16 @@ program powerMethod
             end if
         end do
         eig(k,1) = maxy/maxx
-        if
+        print*,eig(k,1)
+        if (k>2) then
+            er = abs(eig(k,1)-eig(k+1,1))
+            if (er<tol) then
+                goto 90
+            end if
+        end if
+        x = y
     end do
-
+90  print*, 'The Eigen Value is : ', eig(k,1)
+    print*, x
 end program powerMethod
 
