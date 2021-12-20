@@ -3,7 +3,7 @@ program fixedPoint
     real:: x0, xn, er, f, x, tol
     integer:: i , it
 
-    it = 10
+    it = 100
     tol = 0.001
     er = 100
 
@@ -29,5 +29,5 @@ end program
 function f(x)
     implicit none
     real:: x, f
-    f = (x+1)**(0.5)
+    f = x**4-x-10
 end function f

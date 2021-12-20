@@ -13,13 +13,12 @@ program bisection
     elseif (f(b)==0) then
         print *, 'the root is : ',b
     end if
-
 20  c = (a+b)/2
-    if (abs(a-b).lt.(tol)) then
+    if (abs(a-b) < (tol)) then
         print *, 'the root is : ',b
-    elseif (f(a)*f(b).ge.0) then
+    elseif (f(a)*f(b) > 0) then
         goto 10
-    elseif (f(a)*f(c).lt.0) then
+    elseif (f(a)*f(c) < 0) then
         b = c
         goto 20
     else

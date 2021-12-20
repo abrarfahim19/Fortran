@@ -3,7 +3,7 @@ program newton_raphson
     real::x0, x, x1, f, fdif, tol, er
 
     er = 1000
-    tol= 0.0001
+    tol= 0.000001
 
     print*, 'Enter The initial Value'
     read*, x0
@@ -26,17 +26,11 @@ end program newton_raphson
 function f(x)
     implicit none
     real :: x, f
-    f = 3*(x**3) + 2*(x**2) + 12
+    f = cos(x)-x
 end function f
 
 function fdif(x)
     implicit none
     real :: x, fdif
-    fdif = 9*(x**2) + 4*x
+    fdif = -sin(x)-1
 end function fdif
-
-
-!   do while((abs(xn-x0)).gt.tol)
-!       xn = x0-(f(x0))/(fdif(x0))
-!       x0 = xn
-!   end do
