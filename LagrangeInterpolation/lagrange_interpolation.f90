@@ -27,6 +27,7 @@ program lagrange
             end if
         end do
         s = s + term*y(i)
+        print*, s
     end do
 
     print *, 'Ans :', s

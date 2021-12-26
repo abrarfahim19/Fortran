@@ -10,6 +10,7 @@ program Gaussian_elimination
 
     open(unit=10,file='a_value.txt')
     open(unit=11,file='b_value.txt')
+    open(unit=20,file='output.txt')
 
     read(10,*)((a(i,j),j=1,n),i=1,n)
     read(11,*)(b(j),j=1,n)
@@ -42,11 +43,20 @@ program Gaussian_elimination
         x(i) = (b(i)-c(i))/a(i,i)
     end do
 
+    write(20,*),'The solution Matrix is :'
     do i = 1,n
-        write(*,50)i,x(i)
+        do j = 1,n
+            write(20,900, advance = 'no'),a(i,j)
+        end do
+        write(20,900),b(i)
+    end do
+
+    write(20,*),'The Solution is :'
+    do i = 1,n
+        write(20,50)i,x(i)
     end do
 
 100 stop
-50  format('The value of---',/,'x(',i1,'):   ',f0.2,/)
-
+50  format('The value of ','x(',i1,'):   ',f5.2)
+900 Format(f10.2)
 end program

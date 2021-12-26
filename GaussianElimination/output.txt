@@ -1,0 +1,8 @@
+ The solution Matrix is :
+      3.00     -7.00     -2.00     -7.00
+      0.00     -2.00     -1.00     -2.00
+      0.00      0.00     -1.00      6.00
+ The Solution is :
+The value of x(1):    3.00
+The value of x(2):    4.00
+The value of x(3):   -6.00

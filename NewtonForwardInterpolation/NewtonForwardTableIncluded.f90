@@ -28,7 +28,7 @@ program newtonForward
         write(*,60)
     end do
 
-50  format(f0.2,5x)
+50  format(f8.3,5x)
 60  format(/)
 
     print*,'Enter a'
@@ -41,7 +41,8 @@ program newtonForward
         s = s + (p_calc(p,i)*y(0,i))/fact(i)
     end do
 
-    print*, s
+    write(*,900)a,s
+900 Format('The f(',f5.3,') = ',f8.5)
 
 end program
 

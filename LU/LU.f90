@@ -6,8 +6,13 @@ program lu
     print*,'Enter number of equation: '
     read*,n
     ALLOCATE(L(n, n),U(n,n),mat(n,n),y(n),x(n),b(n))
-    print*, 'enter coefficient and constant'
-    read(*,*) ((mat(i,j),j=1,n),b(i),i=1,n)
+
+    open(unit = 10, file='a_value.txt')
+    open(unit = 11, file='b_value.txt')
+
+    read(10,*),((mat(i,j),j= 1,n),i=1,n)
+    read(11,*),(b(i),i=1,n)
+
     L = 0
     U = 0
 
@@ -37,8 +42,6 @@ program lu
 
     !calculate the solution
 
-
-
     y(1) = b(1)
     do i =2,n
         summ = 0
@@ -55,12 +58,17 @@ program lu
         end do
         x(i) = (y(i)-summ)/U(i,i)
     end do
-    do i=1,n
-    write( * , *) (mat(i,j),j=1,3)
-    end do
 
-    print*,x
+    print*,'The Lower Matrix is :'
+    write(*,900)L
+
+    print*,'The Upper Matrix is :'
+    write(*,900)U
+
+    print*,'The solution Matrix is :'
+    write(*,900)x
 
 
+900 Format(3f10.2)
 
 end program
