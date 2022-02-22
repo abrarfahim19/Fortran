@@ -30,11 +30,11 @@ end program newton_raphson
 function f(x)
     implicit none
     real :: x, f
-    f = cos(x)-x
+    f = x**4 + x - 10
 end function f
 
 function fdif(x)
     implicit none
     real :: x, fdif
-    fdif = -sin(x)-1
+    fdif = 4*x**3 + 1
 end function fdif

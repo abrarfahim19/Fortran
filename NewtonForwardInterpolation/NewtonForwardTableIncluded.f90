@@ -2,13 +2,10 @@ program newtonForward
     implicit none
     real::x(10), y(6,6), s, a, p_calc, p
     integer::i, j, n, fact
-
-    print*, 'Enter Number of N'
-    read*,n
+    n = 6
 
     open(unit=10,file = 'x_value.txt')
     open(unit=11,file = 'y_value.txt')
-
     read(10,*),(x(i),i=0,n-1)
     read(11,*),(y(i,0),i=0,n-1)
 
@@ -20,6 +17,8 @@ program newtonForward
     end do
 
     !printing table
+    print*,'The table is:'
+
     do i = 0,n-1
         write(*,50,advance='no'),x(i)
         do j = 0,n-i-1
@@ -28,11 +27,11 @@ program newtonForward
         write(*,60)
     end do
 
-50  format(f8.3,5x)
-60  format(/)
-
     print*,'Enter a'
     read*,a
+
+50  format(f8.3,2x)
+60  format(/)
 
     s = y(0,0)
     p = (a-x(0))/(x(1)-x(0))

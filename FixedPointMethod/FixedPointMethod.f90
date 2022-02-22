@@ -1,45 +1,43 @@
 program fixedPoint
     implicit none
-    real:: x0, xn, er, f, x, tol, diff
-    integer:: i , it
+    real::x0,xn,er=100,f,x,tol=0.000001,diff
+    integer::i,it=100
 
-    it = 100
-    tol = 0.001
-    er = 100
+    open(unit=1, file= 'input.txt')
+    open(unit=2, file= 'output.txt')
 
-    print*, 'Enter the initial value: '
-    read*,x0
+    !The initial Value is taken
+    read(1,*),x0
 
-    if (abs(diff(x))<1) then
-    write(*,10)
+    if (abs(diff(x0))<1) then
+    write(2,10)
 10  Format(9x,'x0',16x,'xn')
         do i = 1, it
             xn = f(x0)
             er = abs(xn-x0)
             if (er<tol) then
-                print*,'The root is: ',x0
+                write(2,900),x0
                 stop
             end if
-            write(*,20),x0,xn
+            write(2,20),x0,xn
 20          Format(5x,f8.5,10x,f8.5)
             x0 = xn
         end do
     else
-        print*, 'Please check your function'
+        print*,'check your function'
     end if
+900 Format('The root is: ',f9.5)
 
 end program
 
 function f(x)
     implicit none
     real:: x, f
-    f = (x+10)**(0.25)
-    !f = x**4 - x + 10
+    f = log(-2*cos(x) - 2**(-x) +6)
 end function f
 
 function diff(x)
     implicit none
     real:: x, diff
-    diff = 0.25*((x+10)**(0.25-1))
-    !diff = 4*(x**3) -1
+    diff = (0.69*2**(-x)+2*sin(x))/(-2*cos(x)-2**(-x)+6)
 end function diff

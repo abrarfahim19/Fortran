@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>C:\Projects\Abrar\Fortran\LU\LU.f90</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta name="generator" content="Code::Blocks Exporter plugin" />
+<style type="text/css">
+<!--
+body { color: #000000; background-color: #FFFFFF; }
+.style1 { color: #A0A0A0; }
+.style2 { color: #F000F0; }
+.style7 { color: #000000; }
+.style8 { color: #0000A0; font-weight: bold; }
+.style9 { color: #00A000; font-weight: bold; }
+.style10 { color: #00A000; font-weight: bold; }
+.style3 { color: #0000FF; }
+.style4 { color: #0000FF; }
+.style5 { color: #0000FF; }
+.style13 { color: #0000FF; }
+.style14 { color: #0000FF; }
+.style11 { color: #00A000; }
+.style6 { color: #FF0000; }
+.style12 { color: #FF0000; }
+.style34 { color: #000000; background-color: #80FFFF; font-weight: bold; }
+.style35 { color: #FFFFFF; background-color: #FF0000; font-weight: bold; }
+.style37 { color: #373737; }
+--></style></head>
+<body>
+<pre>
+<code><span style="font: 10pt Courier New;"><span class="body"> 1 </span><span class="style8">program </span><span class="style7">lu</span>
+<span class="body"> 2      </span><span class="style1">!real::L(3,3),U(3,3),mat(3,3),y(3),x(3),b(3)</span>
+<span class="body"> 3      </span><span class="style8">REAL</span><span class="style6">, </span><span class="style8">ALLOCATABLE </span><span class="style6">:: </span><span class="style7">L</span><span class="style6">(:, :),</span><span class="style7">U</span><span class="style6">(:,:),</span><span class="style7">mat</span><span class="style6">(:,:),</span><span class="style7">y</span><span class="style6">(:),</span><span class="style7">x</span><span class="style6">(:),</span><span class="style7">b</span><span class="style6">(:)</span>
+<span class="body"> 4      </span><span class="style8">real</span><span class="style6">::</span><span class="style7">summ</span><span class="style6">=</span><span class="style2">0.0</span>
+<span class="body"> 5      </span><span class="style8">integer</span><span class="style6">::</span><span class="style7">i</span><span class="style6">,</span><span class="style7">j</span><span class="style6">,</span><span class="style7">k</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body"> 6      </span><span class="style8">print</span><span class="style6">*,</span><span class="style3">'Enter number of equation: '</span>
+<span class="body"> 7      </span><span class="style8">read</span><span class="style6">*,</span><span class="style7">n</span>
+<span class="body"> 8      </span><span class="style8">ALLOCATE</span><span class="style6">(</span><span class="style7">L</span><span class="style6">(</span><span class="style7">n</span><span class="style6">, </span><span class="style7">n</span><span class="style6">),</span><span class="style7">U</span><span class="style6">(</span><span class="style7">n</span><span class="style6">,</span><span class="style7">n</span><span class="style6">),</span><span class="style7">mat</span><span class="style6">(</span><span class="style7">n</span><span class="style6">,</span><span class="style7">n</span><span class="style6">),</span><span class="style7">y</span><span class="style6">(</span><span class="style7">n</span><span class="style6">),</span><span class="style7">x</span><span class="style6">(</span><span class="style7">n</span><span class="style6">),</span><span class="style7">b</span><span class="style6">(</span><span class="style7">n</span><span class="style6">))</span>
+<span class="body"> 9  </span>
+<span class="body">10      </span><span class="style8">open</span><span class="style6">(</span><span class="style8">unit </span><span class="style6">= </span><span class="style2">10</span><span class="style6">, </span><span class="style8">file</span><span class="style6">=</span><span class="style3">'a_value.txt'</span><span class="style6">)</span>
+<span class="body">11      </span><span class="style8">open</span><span class="style6">(</span><span class="style8">unit </span><span class="style6">= </span><span class="style2">11</span><span class="style6">, </span><span class="style8">file</span><span class="style6">=</span><span class="style3">'b_value.txt'</span><span class="style6">)</span>
+<span class="body">12  </span>
+<span class="body">13      </span><span class="style8">read</span><span class="style6">(</span><span class="style2">10</span><span class="style6">,*),((</span><span class="style7">mat</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">j</span><span class="style6">),</span><span class="style7">j</span><span class="style6">= </span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span><span class="style6">),</span><span class="style7">i</span><span class="style6">=</span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span><span class="style6">)</span>
+<span class="body">14      </span><span class="style8">read</span><span class="style6">(</span><span class="style2">11</span><span class="style6">,*),(</span><span class="style7">b</span><span class="style6">(</span><span class="style7">i</span><span class="style6">),</span><span class="style7">i</span><span class="style6">=</span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span><span class="style6">)</span>
+<span class="body">15  </span>
+<span class="body">16      </span><span class="style7">L </span><span class="style6">= </span><span class="style2">0</span>
+<span class="body">17      </span><span class="style7">U </span><span class="style6">= </span><span class="style2">0</span>
+<span class="body">18  </span>
+<span class="body">19      </span><span class="style1">!LU factorization</span>
+<span class="body">20  </span>
+<span class="body">21      </span><span class="style8">do </span><span class="style7">i</span><span class="style6">=</span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body">22          </span><span class="style8">do </span><span class="style7">k </span><span class="style6">= </span><span class="style7">i</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body">23              </span><span class="style7">summ </span><span class="style6">=</span><span class="style2">0</span>
+<span class="body">24              </span><span class="style8">do </span><span class="style7">j </span><span class="style6">= </span><span class="style2">1</span><span class="style6">,</span><span class="style7">i</span>
+<span class="body">25                  </span><span class="style7">summ </span><span class="style6">= </span><span class="style7">summ </span><span class="style6">+ </span><span class="style7">L</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">j</span><span class="style6">)*</span><span class="style7">U</span><span class="style6">(</span><span class="style7">j</span><span class="style6">,</span><span class="style7">k</span><span class="style6">)</span>
+<span class="body">26              </span><span class="style8">end do</span>
+<span class="body">27              </span><span class="style7">U</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">k</span><span class="style6">) = </span><span class="style7">mat</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">k</span><span class="style6">) - </span><span class="style7">summ</span>
+<span class="body">28          </span><span class="style8">end do</span>
+<span class="body">29          </span><span class="style8">do </span><span class="style7">k </span><span class="style6">= </span><span class="style7">i</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body">30              </span><span class="style8">if </span><span class="style6">(</span><span class="style7">i</span><span class="style12">.eq.</span><span class="style7">k</span><span class="style6">) </span><span class="style8">then</span>
+<span class="body">31                  </span><span class="style7">L</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">i</span><span class="style6">)=</span><span class="style2">1</span>
+<span class="body">32              </span><span class="style8">else</span>
+<span class="body">33                  </span><span class="style7">summ </span><span class="style6">= </span><span class="style2">0</span>
+<span class="body">34                  </span><span class="style8">do </span><span class="style7">j</span><span class="style6">=</span><span class="style2">1</span><span class="style6">,</span><span class="style7">i</span>
+<span class="body">35                      </span><span class="style7">summ </span><span class="style6">= </span><span class="style7">summ </span><span class="style6">+ </span><span class="style7">L</span><span class="style6">(</span><span class="style7">k</span><span class="style6">,</span><span class="style7">j</span><span class="style6">)*</span><span class="style7">U</span><span class="style6">(</span><span class="style7">j</span><span class="style6">,</span><span class="style7">i</span><span class="style6">)</span>
+<span class="body">36                  </span><span class="style8">end do</span>
+<span class="body">37                  </span><span class="style7">L</span><span class="style6">(</span><span class="style7">k</span><span class="style6">,</span><span class="style7">i</span><span class="style6">) = </span><span class="style9">int</span><span class="style6">((</span><span class="style7">mat</span><span class="style6">(</span><span class="style7">k</span><span class="style6">,</span><span class="style7">i</span><span class="style6">) - </span><span class="style7">summ</span><span class="style6">)/</span><span class="style7">U</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">i</span><span class="style6">))</span>
+<span class="body">38              </span><span class="style8">end if</span>
+<span class="body">39          </span><span class="style8">end do</span>
+<span class="body">40      </span><span class="style8">end do</span>
+<span class="body">41  </span>
+<span class="body">42  </span>
+<span class="body">43      </span><span class="style1">!calculate the solution</span>
+<span class="body">44  </span>
+<span class="body">45      </span><span class="style7">y</span><span class="style6">(</span><span class="style2">1</span><span class="style6">) = </span><span class="style7">b</span><span class="style6">(</span><span class="style2">1</span><span class="style6">)</span>
+<span class="body">46      </span><span class="style8">do </span><span class="style7">i </span><span class="style6">=</span><span class="style2">2</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body">47          </span><span class="style7">summ </span><span class="style6">= </span><span class="style2">0</span>
+<span class="body">48          </span><span class="style8">do </span><span class="style7">j </span><span class="style6">= </span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span><span class="style6">-</span><span class="style2">1</span>
+<span class="body">49              </span><span class="style7">summ </span><span class="style6">= </span><span class="style7">summ </span><span class="style6">+ </span><span class="style7">L</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">j</span><span class="style6">)*</span><span class="style7">y</span><span class="style6">(</span><span class="style7">j</span><span class="style6">)</span>
+<span class="body">50          </span><span class="style8">end do</span>
+<span class="body">51          </span><span class="style7">y</span><span class="style6">(</span><span class="style7">i</span><span class="style6">) = </span><span class="style7">b</span><span class="style6">(</span><span class="style7">i</span><span class="style6">) -</span><span class="style7">summ</span>
+<span class="body">52      </span><span class="style8">end do</span>
+<span class="body">53      </span><span class="style7">x</span><span class="style6">(</span><span class="style7">n</span><span class="style6">) = </span><span class="style7">y</span><span class="style6">(</span><span class="style7">n</span><span class="style6">)/</span><span class="style7">U</span><span class="style6">(</span><span class="style7">n</span><span class="style6">,</span><span class="style7">n</span><span class="style6">)</span>
+<span class="body">54      </span><span class="style8">do </span><span class="style7">i</span><span class="style6">=</span><span class="style7">n</span><span class="style6">-</span><span class="style2">1</span><span class="style6">,</span><span class="style2">1</span><span class="style6">,-</span><span class="style2">1</span>
+<span class="body">55          </span><span class="style7">summ </span><span class="style6">=</span><span class="style2">0</span>
+<span class="body">56          </span><span class="style8">do </span><span class="style7">j </span><span class="style6">= </span><span class="style7">i</span><span class="style6">+</span><span class="style2">1</span><span class="style6">,</span><span class="style7">n</span>
+<span class="body">57              </span><span class="style7">summ </span><span class="style6">= </span><span class="style7">summ </span><span class="style6">+ </span><span class="style7">U</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">j</span><span class="style6">)*</span><span class="style7">x</span><span class="style6">(</span><span class="style7">j</span><span class="style6">)</span>
+<span class="body">58          </span><span class="style8">end do</span>
+<span class="body">59          </span><span class="style7">x</span><span class="style6">(</span><span class="style7">i</span><span class="style6">) = (</span><span class="style7">y</span><span class="style6">(</span><span class="style7">i</span><span class="style6">)-</span><span class="style7">summ</span><span class="style6">)/</span><span class="style7">U</span><span class="style6">(</span><span class="style7">i</span><span class="style6">,</span><span class="style7">i</span><span class="style6">)</span>
+<span class="body">60      </span><span class="style8">end do</span>
+<span class="body">61  </span>
+<span class="body">62      </span><span class="style8">print</span><span class="style6">*,</span><span class="style3">'The Lower Matrix is :'</span>
+<span class="body">63      </span><span class="style8">write</span><span class="style6">(*,</span><span class="style2">900</span><span class="style6">)</span><span class="style7">L</span>
+<span class="body">64  </span>
+<span class="body">65      </span><span class="style8">print</span><span class="style6">*,</span><span class="style3">'The Upper Matrix is :'</span>
+<span class="body">66      </span><span class="style8">write</span><span class="style6">(*,</span><span class="style2">900</span><span class="style6">)</span><span class="style7">U</span>
+<span class="body">67  </span>
+<span class="body">68      </span><span class="style8">print</span><span class="style6">*,</span><span class="style3">'The solution Matrix is :'</span>
+<span class="body">69      </span><span class="style8">write</span><span class="style6">(*,</span><span class="style2">900</span><span class="style6">)</span><span class="style7">x</span>
+<span class="body">70  </span>
+<span class="body">71  </span>
+<span class="body">72  </span><span class="style13">900 </span><span class="style8">Format</span><span class="style6">(</span><span class="style2">3f10.2</span><span class="style6">)</span>
+<span class="body">73  </span>
+<span class="body">74  </span><span class="style8">end program</span></span>
+</code></pre>
+</body>
+</html>
